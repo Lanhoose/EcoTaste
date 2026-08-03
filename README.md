@@ -1,2 +1,2 @@
 # EcoTaste
-Projeto do SENAI para vende de produtor orgânicos
+Projeto do SENAI para vender de produtor orgânicos

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTaste - Vitrine e Carrinho Inteligente</title>
+    <!-- Vinculação do CSS Externo -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Cabeçalho Institucional -->
+    <header class="header-main">
+        <div class="header-container">
+            <h1>EcoTaste</h1>
+            <!-- Indicador Dinâmico do Carrinho de Compras -->
+            <div class="cart-indicator" aria-label="Carrinho de compras">
+                <span class="icon">🛒</span>
+                <span id="cart-counter">0</span> itens
+            </div>
+        </div>
+    </header>
+
+    <!-- Área Principal de Conteúdo -->
+    <main class="main-layout">
+        <!-- Vitrine de Produtos Orgânicos -->
+        <section class="shop-section">
+            <h2>Nossos Produtos Orgânicos</h2>
+            <div id="vitrine" class="grid-produtos">
+                <!-- Os cards dos produtos serão injetados dinamicamente pelo JavaScript -->
+            </div>
+        </section>
+
+        <!-- Lateral do Carrinho (Resumo Financeiro) -->
+        <aside class="cart-aside">
+            <h2>Seu Carrinho</h2>
+            <div id="cart-items" class="cart-list">
+                <p class="empty-message">Seu carrinho está vazio.</p>
+            </div>
+            <!-- Rodapé do Carrinho com Preço Total -->
+            <div class="cart-footer">
+                <h3>Total da Compra</h3>
+                <p class="total-price">R$ <span id="cart-total">0.00</span></p>
+                <button id="btn-finalizar" class="btn-checkout" disabled>Finalizar Pedido</button>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Importação de Scripts (Importante: inventory.js deve carregar ANTES de app.js) -->
+    <script src="../../js/inventory.js"></script>
+    <script src="../../js/app.js"></script>
+</body>
+</html>

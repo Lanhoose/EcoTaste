@@ -1,134 +1,29 @@
-/**
- * Ecotaste - nucleo de controle do dom e eventos
- * manipulador inteligente de eventos, dados, renderização da interface.
- */
-
-// 1. estado de aplicação ( onde os dados de compra são manipulados temporariamente )
-
 let carrinho = [];
 
-// 2.elementos mapeados (css e html) com o dom
+const vitrineElement = document.getElementById("vitrine");
+const statusFeedbackElement = document.getElementById("status-feedback");
+const cartCountElement = document.getElementById("cart-count");
+const cartTotalElement = document.getElementById("cart-total");
 
-const vitrineContainer = document.getElementById("vitrine"); 
-const cartItemContainer = document.getElementById("cart-items");
-const cartTotalDipslay = document.getElementById("cart-total");
-const cartCounterDisplay = document.getElementById("cart-counter");
-const btnFinalizar = document.getElementById("btn-finalizar");
+async function carregarProdutosAPI() {
 
-/**
- *  renderização da vitrine de produtos
- *  varre o catalogo e monta os elementos html correspondentes
- */
+    try {
+        exibirLoading(true);
+        statusFeedbackElement.innerHTML = "<div class='spinner'></div> <p>Carregando produtos...</p>";
+        await new Promise(resolve => setTimeout(resolve, 1500)); // Simula um atraso de 1 segundo
+        const response = await fetch("./data/produtos.json");
 
-const renderizarVitrine = () => {
-let vitrineHTML = "";
+        if (!response.ok) {
+            throw new Error("Erro ao carregar produtos da API. Codigo de status: " + response.status);
 
-    CATALOGO_PRODUTOS.forEach(produto => {
-        vitrineHTML += `
-            <article class="card-produto">
-                <span class="categoria">${produto.categoria}</span>
-                <h3>${produto.nome}</h3>
-                <p class="preco-produto">R$ <strong>${produto.preco.toFixed(2)}</strong></p>
-                <button class="btn-comprar" data-id="${produto.id}">
-                    Adicionar ao Carrinho
-                </button>
-            </article>
-        `;
-    });
+        }
+        const produtos = await response.json();
 
-    vitrineContainer.innerHTML = vitrineHTML;
+        if(!Array.isArray(produtos) || produtos.length === 0) {
+            throw new Error("Nenhum produto encontrado.");
+        }
+        renderizarVitrine(produtos);
+    statusFeedbackElement.innerHTML = "";
+    }
     
-    // Vincula ouvintes de evento aos botões criados dinamicamente
-    vincularEventosComprar();
-};
-
-
-const vincularEventosComprar= () => {
-    const botoesComprar = document.querySelectorAll(".btn-comprar");
-
-    botoesComprar.forEach(botao => {
-        // Uso de Arrow Function moderna para capturar a ação
-        botao.addEventListener("click", (event) => {
-            const produtoId = Number(event.target.getAttribute("data-id"));
-            adicionarItemAoCarrinho(produtoId);
-        });
-    });
-};
-
-const adicionarItemAoCarrinho = (id) => {
-    // Busca o produto com ID correspondente dentro do Mock de dados
-    const produtoSelecionado = CATALOGO_PRODUTOS.find(prod => produtoTarget(prod, id));
-
-    if (produtoSelecionado) {
-        carrinho.push(produtoSelecionado);
-        console.log(`[EcoTaste] Adicionado: ${produtoSelecionado.nome}`);
-        atualizarCarrinho();
-    }
-};
-
-const produtoTarget = (produto, targetId) => produto.id === targetId;
-
-const atualizarCarrinho = () => {
-    // Atualização do contador do Header
-    cartCounterDisplay.innerText = carrinho.length;
-
-    if (carrinho.length === 0) {
-        cartItemsContainer.innerHTML = '<p class="empty-message">Seu carrinho está vazio.</p>';
-        cartTotalDisplay.innerText = "0.00";
-        btnFinalizar.disabled = true;
-        return;
-    }
-
-    // Se houver itens, habilita o botão de finalizar
-    btnFinalizar.disabled = false;
-
-    let cartHTML = "";
-    let totalAcumulado = 0;
-
-    // Constrói a lista visual de itens no carrinho
-    carrinho.forEach((item, index) => {
-        totalAcumulado += item.preco;
-        cartHTML += `
-            <div class="cart-item">
-                <div class="cart-item-info">
-                    <h4>${item.nome}</h4>
-                    <p>R$ ${item.preco.toFixed(2)}</p>
-                </div>
-                <button class="btn-remover" data-index="${index}">Remover</button>
-            </div>
-        `;
-    });
-
-    cartItemContainer.innerHTML = cartHTML;
-    cartTotalDipslay.innerText = totalAcumulado.toFixed(2);
-
-    // Vincula a ação de exclusão aos novos botões gerados
-    vincularEventosRemover();
-};
-
-const vincularEventosRemover = () => {
-    const botoesRemover = document.querySelectorAll(".btn-remover");
-
-    botoesRemover.forEach(botao => {
-        botao.addEventListener("click", (event) => {
-            const index = Number(event.target.getAttribute("data-index"));
-            removerItemDoCarrinho(index);
-        });
-    });
-};
-
-const removerItemDoCarrinho = (index) => {
-    carrinho.splice(index, 1);
-    atualizarCarrinho();
-};
-
-btnFinalizar.addEventListener("click", () => {
-    alert("Compra finalizada com sucesso!");
-    carrinho = [];
-    atualizarCarrinho();
-});
-
-// Inicialização da aplicação
-window.addEventListener("DOMContentLoaded", () => {
-    renderizarVitrine();
-});
+}

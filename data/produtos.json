@@ -1,0 +1,29 @@
+[{
+    "id": 1,
+    "nome": "Cesta de Hortaliças",
+    "preco": 19.99,
+    "categoria": "verdutas",
+    "imagem": "https://img.fazendinha.me/production/produtor/500/produtos/4832/organicos-miller-cesta-de-organicos-miller-12-itens-1659969699.jpg"
+},
+{
+    "id": 2,
+    "nome": "Cesta de Frutas",
+    "preco": 24.99,
+    "categoria": "F rutas",
+    "imagem": "https://www.isabelaflores.com/media/catalog/product/a/l/alta-256-3.webp"
+},
+{
+    "id": 3,
+    "nome": "Mel Silvestre 100%$",
+    "preco": 29.99,
+    "categoria": "Mercearia",
+    "imagem": "https://http2.mlstatic.com/D_NQ_NP_2X_866761-MLB86168227429_062025-F-mel-silvestre-puro-750g--natural-artesanal-saudave.webp"
+},
+{
+    "id": 4,
+    "nome": "Ovos Caipiras",
+    "preco": 12.99,
+    "categoria": "Proteínas",
+    "imagem": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS0D7R6cIqjm7GjnyOvddayZ7c8vvoOBN-TNuunTZTxo2YEvXVX"
+}
+]

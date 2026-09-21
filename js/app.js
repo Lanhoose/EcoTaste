@@ -25,5 +25,12 @@ async function carregarProdutosAPI() {
         renderizarVitrine(produtos);
     statusFeedbackElement.innerHTML = "";
     }
-    
+    catch(error){
+        console.error("[EcoTaste Error Log]:", error.message);
+        exibirMensagemError(error.message);
+    }
+    finally{
+        exibirLoading(false);
+        console.log("[EcoTaste]: Processo de carregamento finalizado.");
+    }
 }
